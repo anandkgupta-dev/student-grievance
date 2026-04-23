@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const BASE_URL = "https://student-grievance-backend-8loi.onrender.com";
+
 function Login() {
   const navigate = useNavigate();
 
@@ -15,13 +17,12 @@ function Login() {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/login",
+        `${BASE_URL}/api/login`,
         data
       );
 
       localStorage.setItem("token", res.data.token);
 
-      // Redirect to dashboard
       navigate("/dashboard");
     } catch (error) {
       alert("Invalid email or password");

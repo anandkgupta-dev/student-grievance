@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const BASE_URL = "https://student-grievance-backend-8loi.onrender.com";
+
 function Dashboard() {
   const [grievances, setGrievances] = useState([]);
   const [form, setForm] = useState({
@@ -15,12 +17,9 @@ function Dashboard() {
 
   // FETCH
   const fetchData = async () => {
-    const res = await axios.get(
-      "http://localhost:5000/api/grievances",
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    const res = await axios.get(`${BASE_URL}/api/grievances`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     setGrievances(res.data);
   };
 
@@ -34,7 +33,7 @@ function Dashboard() {
 
     if (editId) {
       await axios.put(
-        `http://localhost:5000/api/grievances/${editId}`,
+        `${BASE_URL}/api/grievances/${editId}`,
         form,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -43,7 +42,7 @@ function Dashboard() {
       setEditId(null);
     } else {
       await axios.post(
-        "http://localhost:5000/api/grievances",
+        `${BASE_URL}/api/grievances`,
         form,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -62,12 +61,9 @@ function Dashboard() {
 
   // DELETE
   const handleDelete = async (id) => {
-    await axios.delete(
-      `http://localhost:5000/api/grievances/${id}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    await axios.delete(`${BASE_URL}/api/grievances/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     fetchData();
   };
 
@@ -84,7 +80,7 @@ function Dashboard() {
   // SEARCH
   const handleSearch = async () => {
     const res = await axios.get(
-      `http://localhost:5000/api/grievances/search?title=${search}`,
+      `${BASE_URL}/api/grievances/search?title=${search}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -100,7 +96,6 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      {/* HEADER */}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h2>Dashboard</h2>
         <button className="logout" onClick={handleLogout}>
@@ -108,7 +103,6 @@ function Dashboard() {
         </button>
       </div>
 
-      {/* FORM CARD */}
       <div className="card" style={{ marginTop: "15px" }}>
         <form onSubmit={handleSubmit}>
           <input
@@ -145,7 +139,6 @@ function Dashboard() {
         </form>
       </div>
 
-      {/* SEARCH */}
       <div style={{ marginTop: "15px" }}>
         <input
           placeholder="Search by title"
@@ -162,7 +155,6 @@ function Dashboard() {
 
       <h3 style={{ marginTop: "20px" }}>Your Grievances</h3>
 
-      {/* LIST */}
       {grievances.map((g) => (
         <div key={g._id} className="grievance-card">
           <h4>{g.title}</h4>

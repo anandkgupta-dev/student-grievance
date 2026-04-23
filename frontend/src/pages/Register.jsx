@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const BASE_URL = "https://student-grievance-backend-8loi.onrender.com";
+
 function Register() {
   const navigate = useNavigate();
 
@@ -12,10 +14,13 @@ function Register() {
   });
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // VERY IMPORTANT
+    e.preventDefault();
 
     try {
-      await axios.post("http://localhost:5000/api/register", data);
+      await axios.post(
+        `${BASE_URL}/api/register`,
+        data
+      );
 
       alert("Registered Successfully");
       navigate("/");
