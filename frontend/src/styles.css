@@ -34,10 +34,21 @@ body {
 input, select {
   width: 100%;
   padding: 10px;
-  margin: 8px 0;
+  margin: 10px 0;
   border-radius: 6px;
-  border: none;
+
+  /* ✅ FIX */
+  border: 1px solid #ccc;
+  background: #f9f9f9;
+
   outline: none;
+  font-size: 14px;
+}
+
+/* Focus effect (professional feel) */
+input:focus, select:focus {
+  border: 1px solid #5b86e5;
+  background: white;
 }
 
 /* Buttons */
